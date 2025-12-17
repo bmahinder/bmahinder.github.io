@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Product details - Wild Mountain tracking pants">
+    <title>Product Details - Wild Mountain</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <!-- Futuristic Background Elements -->
+    <div class="cyber-grid"></div>
+    <div class="scan-line"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span>⛰️ WILD MOUNTAIN</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#testimonials">Reviews</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li>
+                    <div class="cart-icon" id="cartIcon">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Product Detail -->
+    <section class="product-detail">
+        <div class="container">
+            <a href="products.html" class="back-to-products">← Back to Products</a>
+        </div>
+
+        <div class="product-detail-container" id="productDetailContainer">
+            <!-- Content will be loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Wild Mountain</h3>
+                <p>Premium tracking pants for the modern adventurer. Built to last, designed to perform.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="YouTube">📹</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="index.html#about">About Us</a>
+                <a href="products.html">Products</a>
+                <a href="index.html#features">Features</a>
+                <a href="index.html#testimonials">Reviews</a>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="#">Shipping & Returns</a>
+                <a href="#">Size Guide</a>
+                <a href="#">Care Instructions</a>
+                <a href="#">Warranty</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>📧 info@wildmountain.com</p>
+                <p>📞 1-800-WILD-MTN</p>
+                <p>📍 Boulder, Colorado, USA</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Wild Mountain. All rights reserved. | Designed for adventurers, by adventurers.</p>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Shopping Cart</h2>
+            <button class="close-cart" id="closeCart" aria-label="Close cart">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span class="cart-total-label">Total:</span>
+                <span class="cart-total-amount" id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toastMessage">Added to cart!</span>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="../js/shared.js"></script>
+    <script>
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            initCart();
+            createScrollIndicator();
+            loadProductDetail();
+        });
+
+        // Load product details
+        function loadProductDetail() {
+            const product = getProductById(productId);
+
+            if (!product) {
+                document.getElementById('productDetailContainer').innerHTML = `
+                    <div style="text-align: center; padding: 4rem;">
+                        <h2>Product not found</h2>
+                        <p>The product you're looking for doesn't exist.</p>
+                        <a href="products.html" class="cta-button" style="margin-top: 2rem;">Browse All Products</a>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('productDetailContainer').innerHTML = `
+                <div class="product-gallery">
+                    <img src="${product.image}" alt="${product.name}" class="main-image" loading="eager">
+                </div>
+                
+                <div class="product-info">
+                    <span class="product-category-badge">${product.category}</span>
+                    <h1>${product.name}</h1>
+                    <div class="product-price">$${product.price.toFixed(2)}</div>
+                    
+                    <p class="product-description">${product.fullDescription}</p>
+                    
+                    <div class="product-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="product-options-detail">
+                        <h3>Select Size</h3>
+                        <div class="size-selector-detail">
+                            ${product.sizes.map((size, index) => `
+                                <button class="size-option-detail ${index === 1 ? 'selected' : ''}" data-size="${size}">${size}</button>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="quantity-selector-detail">
+                            <label>Quantity:</label>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn-detail minus">-</button>
+                                <span class="quantity-value-detail">1</span>
+                                <button class="quantity-btn-detail plus">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="add-to-cart-detail" id="addToCartDetail">
+                        🛒 Add to Cart
+                    </button>
+                </div>
+            `;
+
+            // Initialize interactions
+            initProductInteractions(product);
+        }
+
+        // Initialize product interactions
+        function initProductInteractions(product) {
+            // Size selection
+            const sizeButtons = document.querySelectorAll('.size-option-detail');
+            sizeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sizeButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                });
+            });
+
+            // Quantity controls
+            const quantityValue = document.querySelector('.quantity-value-detail');
+            const minusBtn = document.querySelector('.quantity-btn-detail.minus');
+            const plusBtn = document.querySelector('.quantity-btn-detail.plus');
+
+            minusBtn.addEventListener('click', () => {
+                let qty = parseInt(quantityValue.textContent);
+                if (qty > 1) {
+                    quantityValue.textContent = qty - 1;
+                }
+            });
+
+            plusBtn.addEventListener('click', () => {
+                let qty = parseInt(quantityValue.textContent);
+                if (qty < 10) {
+                    quantityValue.textContent = qty + 1;
+                }
+            });
+
+            // Add to cart
+            const addToCartBtn = document.getElementById('addToCartDetail');
+            addToCartBtn.addEventListener('click', () => {
+                const selectedSize = document.querySelector('.size-option-detail.selected').dataset.size;
+                const quantity = parseInt(quantityValue.textContent);
+
+                addToCart(product.name, product.price, selectedSize, quantity, product.image);
+
+                // Reset quantity
+                quantityValue.textContent = '1';
+
+                // Animation
+                addToCartBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    addToCartBtn.style.transform = '';
+                }, 200);
+            });
+        }
+    </script>
+</body>
+
+</html>
