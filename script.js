@@ -97,6 +97,18 @@ projectCards.forEach(card => {
     });
 });
 
+// ===== PRODUCT CARD HOVER EFFECT =====
+const productCard = document.querySelector('.featured-product-card');
+if (productCard) {
+    productCard.addEventListener('mouseenter', function () {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+    });
+
+    productCard.addEventListener('mouseleave', function () {
+        this.style.transform = 'translateY(0) scale(1)';
+    });
+}
+
 // ===== TYPING EFFECT FOR HERO SUBTITLE =====
 const heroSubtitle = document.querySelector('.hero-subtitle');
 const originalText = heroSubtitle.textContent;
