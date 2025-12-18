@@ -373,20 +373,35 @@ p {
 .profile-image {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: var(--radius-lg);
+  border-radius: 50%;
   background: var(--accent-gradient);
   margin-bottom: var(--spacing-sm);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  /* Changed to visible for canvas effects outside */
   padding: 4px;
+  z-index: 1;
 }
 
 .profile-img-content {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: calc(var(--radius-lg) - 4px);
+  border-radius: 50%;
   transition: transform var(--transition-normal);
+  position: relative;
+  z-index: 2;
+  border: 4px solid var(--bg-card);
+}
+
+#profileCanvas {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .profile-image:hover .profile-img-content {
